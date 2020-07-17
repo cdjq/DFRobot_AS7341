@@ -49,6 +49,8 @@
 #define REG_AS7341_STAT        0X71
 #define REG_AS7341_EDGE        0X72
 #define REG_AS7341_CPIO        0X73
+#define REG_AS7341_LED         0X74
+
 #define REG_AS7341_ENABLE      0X80
 #define REG_AS7341_ATIME       0X81
 #define REG_AS7341_WTIME       0X83
@@ -234,6 +236,8 @@ public:
    * @return flicker寄存器的数据.
    */
   uint8_t readFlickerData();
+  void enableLed(bool on);
+  void controlLed(uint8_t current);
 private:
   float getWtime();
   float getIntegrationTime();

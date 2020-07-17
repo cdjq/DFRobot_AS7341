@@ -51,11 +51,11 @@ void loop(void)
   Serial.println(data1.ADF3);
   Serial.print("ADC3/F4-(蓝)");   
   Serial.println(data1.ADF4);
-  Serial.print("ADC4/Clear-(红外)");
-  Serial.println(data1.ADCLEAR);
-  Serial.print("ADC5/NIR-");
-  Serial.println(data1.ADNIR);
-  delay(1000);
+  //Serial.print("ADC4/Clear-(红外)");
+  //Serial.println(data1.ADCLEAR);
+  //Serial.print("ADC5/NIR-");
+  //Serial.println(data1.ADNIR);
+  //delay(1000);
   as7341.startMeasure(as7341.eF5F8ClearNIR);
   //读取传感器数据通道0~5的值,eF5F8ClearNIR模式下.
   data2 = as7341.readSpectralDataTwo();
