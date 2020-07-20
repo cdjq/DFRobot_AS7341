@@ -310,7 +310,7 @@ void DFRobot_AS7341::enableLed(bool on){
 void DFRobot_AS7341::controlLed(uint8_t current){
   
   uint8_t data=0;
-  
+  if(current > 20 ) current = 20; //电流过大，会损害LDO
   readReg(REG_AS7341_CFG_0,&data,1);
   data = data | (1<<4);
   writeReg(REG_AS7341_CFG_0,&data,1);
