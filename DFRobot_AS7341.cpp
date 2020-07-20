@@ -202,8 +202,9 @@ void DFRobot_AS7341::startMeasure(eChChoose_t mode)
   uint8_t data=0;
   
   readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (1<<4);
+  data = data | (0<<4);
   writeReg(REG_AS7341_CFG_0,&data,1);
+  
   enableSpectralMeasure(false);
   writeReg(0xAF,0x10);
   if(mode  == eF1F4ClearNIR)
@@ -222,7 +223,7 @@ uint8_t DFRobot_AS7341::readFlickerData(){
   uint8_t flicker;
   uint8_t data=0;
   readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (1<<4);
+  data = data | (0<<4);
   writeReg(REG_AS7341_CFG_0,&data,1);
   enableSpectralMeasure(false);
   writeReg(0xAF,0x10);
@@ -310,7 +311,7 @@ void DFRobot_AS7341::enableLed(bool on){
 void DFRobot_AS7341::controlLed(uint8_t current){
   
   uint8_t data=0;
-  if(current > 20 ) current = 20; //电流过大，会损害LDO
+  
   readReg(REG_AS7341_CFG_0,&data,1);
   data = data | (1<<4);
   writeReg(REG_AS7341_CFG_0,&data,1);
@@ -322,6 +323,9 @@ void DFRobot_AS7341::controlLed(uint8_t current){
   data = data | (current & 0x7f);
   writeReg(REG_AS7341_LED,&data,1);
   delay(10);
+  readReg(REG_AS7341_CFG_0,&data,1);
+  data = data | (0<<4);
+  writeReg(REG_AS7341_CFG_0,&data,1);
 }
 void DFRobot_AS7341::setInt(bool connect){
   uint8_t data;
