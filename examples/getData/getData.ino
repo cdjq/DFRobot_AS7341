@@ -25,18 +25,22 @@ void setup(void)
     Serial.println("IIC初始化失败，请检测连线是否正确");
     delay(1000);
   }
-  
-}
-void loop(void)
-{
-  DFRobot_AS7341::sModeOneData_t data1;
-  DFRobot_AS7341::sModeTwoData_t data2;
   //设置寄存器ATIME的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
   as7341.setAtime(100);
   //设置ASTEP寄存器的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
   as7341.setAstep(999);
   //设置增益(0~10对应 X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
   as7341.setAGAIN(9);
+  as7341.enableLed(true);
+  as7341.controlLed(0);  
+
+}
+void loop(void)
+{
+  DFRobot_AS7341::sModeOneData_t data1;
+  DFRobot_AS7341::sModeTwoData_t data2;
+
+
   //开始光谱的测量.
   //通道映射的模式 :1.eF1F4ClearNIR,2.eF5F8ClearNIR
   as7341.startMeasure(as7341.eF1F4ClearNIR);
@@ -71,5 +75,7 @@ void loop(void)
   Serial.println(data2.ADCLEAR);
   Serial.print("ADC5/NIR-");
   Serial.println(data2.ADNIR);
+
   delay(1000);
+  
 }

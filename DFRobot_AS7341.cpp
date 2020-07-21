@@ -202,7 +202,7 @@ void DFRobot_AS7341::startMeasure(eChChoose_t mode)
   uint8_t data=0;
   
   readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (0<<4);
+  data = data & (~(1<<4));
   writeReg(REG_AS7341_CFG_0,&data,1);
   
   enableSpectralMeasure(false);
@@ -223,7 +223,7 @@ uint8_t DFRobot_AS7341::readFlickerData(){
   uint8_t flicker;
   uint8_t data=0;
   readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (0<<4);
+  data = data & (~(1<<4));
   writeReg(REG_AS7341_CFG_0,&data,1);
   enableSpectralMeasure(false);
   writeReg(0xAF,0x10);
@@ -299,6 +299,9 @@ void DFRobot_AS7341::setGpio(bool connect){
 }
 void DFRobot_AS7341::enableLed(bool on){
   uint8_t data=0;
+  readReg(REG_AS7341_CFG_0,&data,1);
+  data = data | (1<<4);
+  writeReg(REG_AS7341_CFG_0,&data,1);
   readReg(REG_AS7341_CONFIG,&data,1);
   if(on == true){
     data = data | (1<<3);
@@ -322,10 +325,10 @@ void DFRobot_AS7341::controlLed(uint8_t current){
   data = data | (1<<7);
   data = data | (current & 0x7f);
   writeReg(REG_AS7341_LED,&data,1);
-  delay(10);
-  readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (0<<4);
-  writeReg(REG_AS7341_CFG_0,&data,1);
+  delay(100);
+  //readReg(REG_AS7341_CFG_0,&data,1);
+  //data = data & (~(1<<4));
+  //writeReg(REG_AS7341_CFG_0,&data,1);
 }
 void DFRobot_AS7341::setInt(bool connect){
   uint8_t data;
