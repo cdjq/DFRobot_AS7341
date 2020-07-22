@@ -1,10 +1,7 @@
 # DFRobot_AS7341
 
-![正反面svg效果图](https://github.com/ouki-wang/DFRobot_Sensor/raw/master/resources/images/SEN0245svg1.png)
+这是一款基于ams的最新的AS7341的可见光传感器，该传感器可以测量8个波长的可见光强度、100Hz或120Hz的环境光闪烁、NIR测量，拥有6个独立的ADC通道，可以并行的处理数据，相比传统的RGB颜色传感器，这款可见光传感器可以识别出真正的橙色。 
 
-## 产品链接（链接到英文商城）
-    SKU：LM75B 温度传感器
-   
 ## Table of Contents
 
 * [Summary](#summary)
@@ -33,7 +30,8 @@ Arduino Uno        |      √       |              |             |
 Mega2560        |      √       |              |             | 
 Leonardo        |      √       |              |             | 
 ESP32        |      √       |              |             | 
-micro:bit        |      √       |              |             | 
+ESP8266        |      √       |              |             | 
+M0        |      √       |              |             | 
 
 
 ## History
