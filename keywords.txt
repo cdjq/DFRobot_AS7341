@@ -22,6 +22,8 @@ startMeasure	KEYWORD2
 readSpectralDataOne	KEYWORD2
 readSpectralDataTwo	KEYWORD2
 readFlickerData	KEYWORD2
+enableLed	KEYWORD2
+controlLed	KEYWORD2
 
 
 #######################################
