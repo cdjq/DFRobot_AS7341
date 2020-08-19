@@ -34,7 +34,7 @@ void setup(void)
   as7341.setAGAIN(7);
   //使能LED
   //as7341.enableLed(true);
-  //设置引脚电流控制亮度(0~20对应电流 4mA,6mA,8mA,10mA,12mA,......,42mA)
+  //设置引脚电流控制亮度(1~20对应电流 4mA,6mA,8mA,10mA,12mA,......,42mA)
   //as7341.controlLed(0);
 
 }
