@@ -18,7 +18,8 @@ DFRobot_AS7341::DFRobot_AS7341(TwoWire *pWire)
 {
   _pWire = pWire;
   _address = 0x39;
-} 
+}
+ 
 int DFRobot_AS7341::begin() 
 {
   uint8_t buffer[2];
@@ -45,8 +46,6 @@ uint8_t DFRobot_AS7341::readID()
   }
 }
 
-
-
 void DFRobot_AS7341::enableAS7341(bool on)
 {
   uint8_t data;
@@ -58,6 +57,7 @@ void DFRobot_AS7341::enableAS7341(bool on)
   }
   writeReg(REG_AS7341_ENABLE,&data,1);
 }
+
 void DFRobot_AS7341::enableSpectralMeasure(bool on)
 {
   uint8_t data;
@@ -69,6 +69,7 @@ void DFRobot_AS7341::enableSpectralMeasure(bool on)
   }
   writeReg(REG_AS7341_ENABLE,&data,1);
 }
+
 void DFRobot_AS7341::enableWait(bool on){
 
   uint8_t data;
@@ -80,6 +81,7 @@ void DFRobot_AS7341::enableWait(bool on){
   }
   writeReg(REG_AS7341_ENABLE,&data,1);
 }
+
 void DFRobot_AS7341::enableSMUX(bool on){
   uint8_t data;
   readReg(REG_AS7341_ENABLE,&data,1);
@@ -90,6 +92,7 @@ void DFRobot_AS7341::enableSMUX(bool on){
   }
   writeReg(REG_AS7341_ENABLE,&data,1);
 }
+
 void DFRobot_AS7341::enableFlickerDetection(bool on){
 
   uint8_t data;
@@ -101,8 +104,6 @@ void DFRobot_AS7341::enableFlickerDetection(bool on){
   }
   writeReg(REG_AS7341_ENABLE,&data,1);
 }
-
-
 
 void DFRobot_AS7341::config(eMode_t mode)
 {
@@ -146,7 +147,6 @@ void DFRobot_AS7341::F1F4_Clear_NIR() {
   writeReg(0x13, 0x06); 
 }
 
-
 void DFRobot_AS7341::F5F8_Clear_NIR() {
   writeReg(byte(0x00), byte(0x00)); 
   writeReg(byte(0x01), byte(0x00)); 
@@ -169,8 +169,6 @@ void DFRobot_AS7341::F5F8_Clear_NIR() {
   writeReg(byte(0x12), byte(0x00)); 
   writeReg(byte(0x13), byte(0x06)); 
 }
-
-
 
 void DFRobot_AS7341::FDConfig() {
 
@@ -196,7 +194,6 @@ void DFRobot_AS7341::FDConfig() {
   writeReg(byte(0x13), byte(0x60)); 
 }
 
-
 void DFRobot_AS7341::startMeasure(eChChoose_t mode)
 {
   uint8_t data=0;
@@ -219,6 +216,7 @@ void DFRobot_AS7341::startMeasure(eChChoose_t mode)
   }
   if(retry == 0) DBG(" data access error");
 }
+
 uint8_t DFRobot_AS7341::readFlickerData(){
   uint8_t flicker;
   uint8_t data=0;
@@ -227,23 +225,19 @@ uint8_t DFRobot_AS7341::readFlickerData(){
   writeReg(REG_AS7341_CFG_0,&data,1);
   enableSpectralMeasure(false);
   writeReg(0xAF,0x10);
-  
   FDConfig();
-  
   enableSMUX(true);
   enableSpectralMeasure(true);
   uint8_t retry = 100;
 
   if(retry == 0) DBG(" data access error");
   enableFlickerDetection(true);
- // while(!measureComplete()){
-   // delay(1);
-  //}
   delay(600);
   readReg(REG_AS7341_STATUS,&flicker,1);
   enableFlickerDetection(false);
   return flicker;
 }
+
 bool DFRobot_AS7341::measureComplete(){
   uint8_t status;
   readReg(REG_AS7341_STATUS_2,&status,1);
@@ -254,10 +248,10 @@ bool DFRobot_AS7341::measureComplete(){
     return false;
   }
 }
+
 uint16_t DFRobot_AS7341::getChannelData(uint8_t channel){
   uint8_t data[2];
   uint16_t channelData = 0x0000;
-  //if(channel > 5) return 0;
   readReg(REG_AS7341_CH0_DATA_L + channel*2,data,1);
   readReg(REG_AS7341_CH0_DATA_H + channel*2,data+1,1);
   channelData = data[1];
@@ -265,6 +259,7 @@ uint16_t DFRobot_AS7341::getChannelData(uint8_t channel){
   delay(50);
   return channelData;
 }
+
 DFRobot_AS7341::sModeOneData_t DFRobot_AS7341::readSpectralDataOne()
 {
   sModeOneData_t data;
@@ -276,6 +271,7 @@ DFRobot_AS7341::sModeOneData_t DFRobot_AS7341::readSpectralDataOne()
   data.ADNIR = getChannelData(5);
   return data;
 }
+
 DFRobot_AS7341::sModeTwoData_t DFRobot_AS7341::readSpectralDataTwo()
 {
   sModeTwoData_t data;
@@ -287,6 +283,7 @@ DFRobot_AS7341::sModeTwoData_t DFRobot_AS7341::readSpectralDataTwo()
   data.ADNIR = getChannelData(5);
   return data;
 }
+
 void DFRobot_AS7341::setGpio(bool connect){
   uint8_t data;
   readReg(REG_AS7341_CPIO,&data,1);
@@ -297,6 +294,7 @@ void DFRobot_AS7341::setGpio(bool connect){
   }
   writeReg(REG_AS7341_CPIO,&data,1);
 }
+
 void DFRobot_AS7341::enableLed(bool on){
   uint8_t data=0;
   readReg(REG_AS7341_CFG_0,&data,1);
@@ -309,27 +307,23 @@ void DFRobot_AS7341::enableLed(bool on){
     data = data & (~(1<<3));
   }
   writeReg(REG_AS7341_CONFIG,&data,1);
-  
 }
+
 void DFRobot_AS7341::controlLed(uint8_t current){
-  
   uint8_t data=0;
-  
+  current--;
+  if(current > 19) current = 19;
   readReg(REG_AS7341_CFG_0,&data,1);
   data = data | (1<<4);
   writeReg(REG_AS7341_CFG_0,&data,1);
-  
-  
   data = 0;
   readReg(REG_AS7341_LED,&data,1);
   data = data | (1<<7);
   data = data | (current & 0x7f);
   writeReg(REG_AS7341_LED,&data,1);
   delay(100);
-  //readReg(REG_AS7341_CFG_0,&data,1);
-  //data = data & (~(1<<4));
-  //writeReg(REG_AS7341_CFG_0,&data,1);
 }
+
 void DFRobot_AS7341::setInt(bool connect){
   uint8_t data;
   readReg(REG_AS7341_CPIO,&data,1);
@@ -352,6 +346,7 @@ void DFRobot_AS7341::enableSysInt(bool on)
   }
   writeReg(REG_AS7341_INTENAB,&data,1);
 }
+
 void DFRobot_AS7341::enableFIFOInt(bool on)
 {
   uint8_t data;
@@ -363,6 +358,7 @@ void DFRobot_AS7341::enableFIFOInt(bool on)
   }
   writeReg(REG_AS7341_INTENAB,&data,1);
 }
+
 void DFRobot_AS7341::enableSpectralInt(bool on)
 {
   uint8_t data;
@@ -379,37 +375,27 @@ void DFRobot_AS7341::endSleep()
 {
   uint8_t data;
   readReg(REG_AS7341_INTENAB,&data,1);
- // if(on == true){
   data = data | (1<<3);
-  //} else {
-  //  data = data & (~(1<<3));
-  ///}
   writeReg(REG_AS7341_INTENAB,&data,1);
 
 }
+
 void DFRobot_AS7341::clearFIFO()
 {
   uint8_t data;
   readReg(REG_AS7341_CONTROL,&data,1);
-  //if(on == true){
-    data = data | (1<<0);
-  //} else {
-    data = data & (~(1<<0));
-  //}
+  data = data | (1<<0);
+  data = data & (~(1<<0));
   writeReg(REG_AS7341_CONTROL,&data,1);
 }
+
 void DFRobot_AS7341::spectralAutozero()
 {
   uint8_t data;
   readReg(REG_AS7341_CONTROL,&data,1);
-  //if(on == true){
-    data = data | (1<<1);
- // } else {
- //   data = data & (~(1<<1));
- // }
+  data = data | (1<<1);
   writeReg(REG_AS7341_CONTROL,&data,1);
 }
-
 
 void DFRobot_AS7341::enableFlickerInt(bool on)
 {
@@ -422,16 +408,18 @@ void DFRobot_AS7341::enableFlickerInt(bool on)
   }
   writeReg(REG_AS7341_INTENAB,&data,1);
 }
+
 void DFRobot_AS7341::setAtime(uint8_t value)
 {
   writeReg(REG_AS7341_ATIME,&value,1);
 }
+
 void DFRobot_AS7341::setAGAIN(uint8_t value)
 {
   if(value > 10) value = 10;
   writeReg(REG_AS7341_CFG_1,&value,1);
-
 }
+
 void DFRobot_AS7341::setAstep(uint16_t value){
   uint8_t highValue,lowValue;
   lowValue = value & 0x00ff;
@@ -440,6 +428,7 @@ void DFRobot_AS7341::setAstep(uint16_t value){
 
   writeReg(REG_AS7341_ASTEP_H,&highValue,1);
 }
+
 float DFRobot_AS7341::getIntegrationTime(){
 
   uint8_t data;
@@ -483,6 +472,7 @@ float DFRobot_AS7341::getWtime(){
   }
   return value;
 }
+
 bool DFRobot_AS7341::checkWtime()
 {
   uint8_t status;
@@ -495,11 +485,9 @@ bool DFRobot_AS7341::checkWtime()
     return  true;
   }
 }
+
 void DFRobot_AS7341::writeReg(uint8_t reg, uint8_t data){
-  //uint8_t data1;
   writeReg(reg,&data,1);
-
-
 }
 void DFRobot_AS7341::writeReg(uint8_t reg, void* pBuf, size_t size) 
 {
@@ -514,6 +502,7 @@ void DFRobot_AS7341::writeReg(uint8_t reg, void* pBuf, size_t size)
   }
   _pWire->endTransmission();
 }
+
 uint8_t DFRobot_AS7341::readReg(uint8_t reg, void* pBuf, size_t size) 
 {
   if (pBuf == NULL) {
