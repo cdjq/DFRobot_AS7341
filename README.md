@@ -1,6 +1,6 @@
 # DFRobot_AS7341
 
-您对颜色了解多少？您想了解真正的颜色吗？眼睛可能会欺骗您，但是传感器不会。AS7341可见光传感器可以告诉您最真实的颜色。
+您对颜色了解多少？您想了解真正的颜色吗？眼睛可能会欺骗您，但是传感器不会。AS7341可见光传感器可以告诉您最真实的颜色。<br>
 AS7341可见光传感器采用业内知名的ams公司推出的新一代AS7341光谱传感IC。该传感器有8个可见光通道、1个闪烁通道、1个NIR通道和1个未加滤光片的通道。该传感器拥有6个独立的16位ADC通道，可以并行的处理数据。该传感器板载了两颗高亮LED，可在暗光环境下进行补光。
 
 ## Table of Contents
@@ -13,7 +13,7 @@ AS7341可见光传感器采用业内知名的ams公司推出的新一代AS7341�
 * [Credits](#credits)
 
 ## Summary
-1.读取各个通道的数值
+1.读取各个通道的数值<br>
 2.检测光源频闪是否为50HZ或60HZ
 
 
@@ -23,7 +23,7 @@ To use this library, first download the library file, paste it into the \Arduino
 
 ## Methods
 ```C++
-/**
+ /**
    * @brief init function
    * @return Return 0 if the initialization succeeds, otherwise return non-zero and error code.
    */
