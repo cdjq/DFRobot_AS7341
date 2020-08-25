@@ -58,9 +58,9 @@ void loop(void)
   Serial.println(data1.ADF3);
   Serial.print("F4(505-525nm):");   
   Serial.println(data1.ADF4);
-  //Serial.print("Clear:");
+  //Serial.print("ADC4/Clear-(红外)");
   //Serial.println(data1.ADCLEAR);
-  //Serial.print("NIR:");
+  //Serial.print("ADC5/NIR-");
   //Serial.println(data1.ADNIR);
   //delay(1000);
   as7341.startMeasure(as7341.eF5F8ClearNIR);
