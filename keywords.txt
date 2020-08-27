@@ -24,8 +24,15 @@ readSpectralDataTwo	KEYWORD2
 readFlickerData	KEYWORD2
 enableLed	KEYWORD2
 controlLed	KEYWORD2
-
-
+measureComplete	KEYWORD2
+setThreshold	KEYWORD2
+getLowThreshold	KEYWORD2
+getHighThreshold	KEYWORD2
+getIntSource	KEYWORD2
+clearInterrupt	KEYWORD2
+interrupt	KEYWORD2
+enableSpectralInterrupt	KEYWORD2
+setIntChannel	KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################
@@ -42,7 +49,7 @@ eCH_F8	LITERAL1
 eCH_CLEAR	LITERAL1
 eCH_NIR	LITERAL1
 eF1F4ClearNIR	LITERAL1
-eF1F4ClearNIR	LITERAL1
+eF5F8ClearNIR	LITERAL1
 
 ADF1	LITERAL1
 ADF2	LITERAL1
@@ -56,3 +63,7 @@ ADF7	LITERAL1
 ADF8	LITERAL1
 ADCLEAR	LITERAL1
 ADNIR	LITERAL1
+
+eSpm	LITERAL1
+eSyns	LITERAL1
+eSynd	LITERAL1

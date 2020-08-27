@@ -63,7 +63,7 @@
 #define REG_AS7341_REVID       0X91
 
 #define REG_AS7341_ID          0X92
-#define REG_AS7341_STATUS      0X93
+#define REG_AS7341_STATUS_1      0X93
 #define REG_AS7341_ASTATUS     0X94
 
 
@@ -112,7 +112,7 @@
 #define REG_AS7341_FDATA_H       0XFF
 
 
-
+#define AS7341_GPIO               4
 
 class DFRobot_AS7341 
 {
@@ -185,7 +185,7 @@ public:
    * @brief init function
    * @return Return 0 if the initialization succeeds, otherwise return non-zero and error code.
    */
-  int begin();
+  int begin(eMode_t mode =eSpm);
 
   /**
    * @brief 读取传感器的ID
@@ -236,20 +236,39 @@ public:
    * @return flicker寄存器的数据.
    */
   uint8_t readFlickerData();
+  /**
+   * @brief 设置测量模式
+   * @param mode 测量模式.
+   */
+  void config(eMode_t mode);
+  bool measureComplete();
+  void setGpioMode(uint8_t mode);
+  void enableSpectralMeasure(bool on);
   void enableLed(bool on);
   void controlLed(uint8_t current);
+  bool interrupt();
+  void setThreshold(uint16_t lowTh,uint16_t highTh);
+  uint16_t getLowThreshold();
+  uint16_t getHighThreshold();
+  void enableSpectralInterrupt(bool on);
+  void setIntChannel(uint8_t channel);
+  void setAPERS(uint8_t num);
+  uint8_t getIntSource();
+  
+  void clearInterrupt();
 private:
   float getWtime();
   float getIntegrationTime();
   uint16_t getChannelData(uint8_t channel);
   
-  bool measureComplete();
+  
   void enableAS7341(bool on);
-  void enableSpectralMeasure(bool on);
+  
   void enableWait(bool on);
   void enableSMUX(bool on);
   void enableFlickerDetection(bool on);
-  void config(eMode_t mode);
+  
+  void setBank(uint8_t addr);
   
   void setGpio(bool connect);
   void setInt(bool connect);
@@ -281,11 +300,13 @@ private:
    * @param size Length of the data to be read
    * @return Return the actually read length, fails to read if return 0.
    */
+  uint8_t readReg(uint8_t reg);
   uint8_t readReg(uint8_t reg, void* pBuf, size_t size);
   
   TwoWire *_pWire;
   uint8_t _address;
   uint8_t _mode;
+  eMode_t measureMode;
 
 };
 
