@@ -1,7 +1,7 @@
 # DFRobot_AS7341
 
-您对颜色了解多少？您想了解真正的颜色吗？眼睛可能会欺骗您，但是传感器不会。AS7341可见光传感器可以告诉您最真实的颜色。<br>
-AS7341可见光传感器采用业内知名的ams公司推出的新一代AS7341光谱传感IC。该传感器有8个可见光通道、1个闪烁通道、1个NIR通道和1个未加滤光片的通道。该传感器拥有6个独立的16位ADC通道，可以并行的处理数据。该传感器板载了两颗高亮LED，可在暗光环境下进行补光。
+We live in a colorful world, but how much do you really know about color? You eyes may deceive you, while the sensors don’t lie. This AS7341sensor can tell you the truth about color. <br> 
+AS7341 Visible Light Sensor employs the new generation of AS7341 spectral sensor IC launched by the well-known ARM company. The sensor features eight channels for the visible light, one channel for near-IR, and one channel without a filter. Also it integrates a dedicated channel to detect ambient light flicker. Besides that, this sensor comes with 6 independent 16-bit ADC channels for data processing in parallel. The two on-board extra-bright LEDs can supply light in dark environment.
 
 ## Table of Contents
 
@@ -13,8 +13,8 @@ AS7341可见光传感器采用业内知名的ams公司推出的新一代AS7341�
 * [Credits](#credits)
 
 ## Summary
-1.读取各个通道的数值<br>
-2.检测光源频闪是否为50HZ或60HZ
+1.Read the value of each channel<br>
+2.Detect whether the frequency of light source flickering is 50HZ or 60HZ
 
 
 ## Installation
@@ -30,26 +30,26 @@ To use this library, first download the library file, paste it into the \Arduino
   int begin();
 
   /**
-   * @brief 读取传感器的ID
-   * @return 读取到的传感器ID,一个字节数据.
+   * @brief Read sensor ID 
+   * @return The read sensor ID, one byte 
    */
   uint8_t readID();
   
-  /**
-   * @brief 设置寄存器ATIME的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
-   * @param ATIME寄存器的值.
+  /** 
+   * @brief Set the value of register ATIME, through which the value of integration time can be calculated. The value represents the time that must be spent during data reading.
+   * @param The value of register ATIME
    */
   void setAtime(uint8_t value);
   void setAstep(uint16_t value);
   /**
-   * @brief 设置增益值(0~10对应 X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
-   * @param CFG1寄存器的值.
+   * @brief Set gain value (0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
+   * @param The value of register CFG1
    */
   void setAGAIN(uint8_t value);
 
   /**
-   * @brief 设置WTIME值，通过该值可计算 wite time，该值表示读取数据过程中必须要消耗的时间
-   * @param WTIME的值.
+   * @brief Set the value of WTIME, through which wite time can be calculated. The value represents the time that must be spent during data reading.
+   * @param The value of WTIME
    */
   void setWtime(uint8_t value);
   
@@ -57,36 +57,36 @@ To use this library, first download the library file, paste it into the \Arduino
   //void mapChannel(eChannel_t ADC0,eChannel_t ADC1,eChannel_t ADC2,eChannel_t ADC3,eChannel_t ADC4,eChannel_t ADC5);
   //void setGpio();
   /**
-   * @brief 开始光谱的测量.
-   * @param 通道映射的模式 :1.eF1F4ClearNIR,2.eF5F8ClearNIR
+   * @brief Start spectrum measurement 
+   * @param Channel mapping mode:1.eF1F4ClearNIR,2.eF5F8ClearNIR
    */
   void startMeasure(eChChoose_t mode);
   /**
-   * @brief 读取传感器数据通道0~5的值，eF1F4ClearNIR模式下.
-   * @return sModeOneData_t 的数据
+   * @brief Read the value of sensor data channel 0~5, under eF1F4ClearNIR
+   * @return The data of sModeOneData_t
    */
   sModeOneData_t readSpectralDataOne();
   
   /**
-   * @brief 读取传感器数据通道0~5的值,eF5F8ClearNIR模式下.
-   * @return sModeTwoData_t 的数据
+   * @brief Read the value of sensor data channel 0~5, under eF5F8ClearNIR
+   * @return The data of sModeTwoData_t
    */
   sModeTwoData_t readSpectralDataTwo();
   
   /**
-   * @brief 读取flicker寄存器的值，可据此预计光源的闪烁频率
-   * @return flicker寄存器的数据.
+   * @brief Read the value of register flicker, through which the flicker frequency of the light source can be predicted
+   * @return The data of register flicker
    */
   uint8_t readFlickerData();
   
   /**
-   * @brief 打开或关闭LED
+   * @brief Turn the LED on or off
    * @param true or false
    */
   void enableLed(bool on);
 
   /**
-   * @brief 设置引脚电流控制亮度(1~20对应电流 4mA,6mA,8mA,10mA,12mA,......,42mA)
+   * @brief Set pin current to control brightness (1~20 corresponds to current 4mA,6mA,8mA,10mA,12mA,......,42mA)
    * @param 1~20
    */
   void controlLed(uint8_t current);
