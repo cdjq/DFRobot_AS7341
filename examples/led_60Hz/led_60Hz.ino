@@ -1,5 +1,5 @@
 //60HZ
-//请将此代码烧录到另一块主控上，在数字10引脚上接上LED灯，为getFlicker.ino提供60HZ的环境光源
+//Burn the codes to another main-controller, and connect an LED onto the Digital pin 10 to provide 60Hz ambient light for getFlicker.ino.
 
 void setup() {
   pinMode(10, OUTPUT);
