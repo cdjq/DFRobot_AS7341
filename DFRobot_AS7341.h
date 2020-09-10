@@ -1,7 +1,7 @@
 /*!
  * @file DFRobot_AS7341.h
  * @brief Define the infrastructure of the DFRobot_AS7341 class
- * @n 可以驱动IC为AS731的光谱传感器，
+ * @n Drive AS7341-IC-integrated spectrum sensor  
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
@@ -122,23 +122,23 @@ public:
 #define ERR_DATA_BUS      -1      //Data Bus error
 #define ERR_IC_VERSION    -2      //Chip version mismatch 
   /**
-    光谱传感器的三种测量模式
+    The measurement mode of spectrum snesor 
   */
   typedef enum {
-    eSpm = 0,/**<SPM模式>*/
-    eSyns = 1,/**<SYNS模式*/
-    eSynd = 3,/**<SYND模式>*/
+    eSpm = 0,/**<SPM>*/
+    eSyns = 1,/**<SYNS*/
+    eSynd = 3,/**<SYND>*/
     
   }eMode_t;
   /**
-    通道映射的模式
+    The modes of channel mapping 
   */
   typedef enum{
-    eF1F4ClearNIR,/**<将六个通道的寄存器的值分别映射为 F1,F2,F3,F4,clear,NIR>*/
-    eF5F8ClearNIR,/**<将六个通道的寄存器的值分别映射为 F5,F6,F7,F8,clear,NIR>*/
+    eF1F4ClearNIR,/**<Map the values of the registers of 6 channels to F1,F2,F3,F4,clear,NIR>*/
+    eF5F8ClearNIR,/**<Map the values of the registers of 6 channels to F5,F6,F7,F8,clear,NIR>*/
   }eChChoose_t;
   /**
-    分别表示10个不同的光二极管测量通道
+    Represent 10 different photodiode measurement channels 
   */
   typedef enum{
     eCH_F1,
@@ -153,26 +153,26 @@ public:
     eCH_NIR,
   }eChannel_t;
   /**
-    eF1F4ClearNIR通道映射模式下六个寄存器通道的值
+    The values of the registers of 6 channels under eF1F4ClearNIR
   */
   typedef struct{
-    uint16_t ADF1;/**<F1二极管的数据>*/
-    uint16_t ADF2;/**<F2二极管的数据>*/
-    uint16_t ADF3;/**<F3二极管的数据>*/
-    uint16_t ADF4;/**<F4二极管的数据>*/
-    uint16_t ADCLEAR;/**<clear二极管的数据>*/
-    uint16_t ADNIR;/**<NIR二极管的数据>*/
+    uint16_t ADF1;/**<F1 diode data>*/
+    uint16_t ADF2;/**<F2 diode data>*/
+    uint16_t ADF3;/**<F3 diode data>*/
+    uint16_t ADF4;/**<F4 diode data>*/
+    uint16_t ADCLEAR;/**<clear diode data>*/
+    uint16_t ADNIR;/**<NIR diode data>*/
   }sModeOneData_t;
   /**
-    eF5F8ClearNIR通道映射模式下六个寄存器通道的值
+    The values of the registers of 6 channels under eF5F8ClearNIR
   */
   typedef struct{
-    uint16_t ADF5;/**<F5二极管的数据>*/
-    uint16_t ADF6;/**<F6二极管的数据>*/
-    uint16_t ADF7;/**<F7二极管的数据>*/
-    uint16_t ADF8;/**<F8二极管的数据>*/
-    uint16_t ADCLEAR;/**<clear二极管的数据>*/
-    uint16_t ADNIR;/**<NIR二极管的数据>*/
+    uint16_t ADF5;/**<F5 diode data>*/
+    uint16_t ADF6;/**<F6 diode data>*/
+    uint16_t ADF7;/**<F7 diode data>*/
+    uint16_t ADF8;/**<F8 diode data>*/
+    uint16_t ADCLEAR;/**<clear diode data>*/
+    uint16_t ADNIR;/**<NIR diode data>*/
   }sModeTwoData_t;
   
   /*!
@@ -188,26 +188,27 @@ public:
   int begin(eMode_t mode =eSpm);
 
   /**
-   * @brief 读取传感器的ID
-   * @return 读取到的传感器ID,一个字节数据.
+   * @brief Read sensor ID
+   * @return The read sensor ID, one byte 
    */
   uint8_t readID();
   
   /**
-   * @brief 设置寄存器ATIME的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
-   * @param ATIME寄存器的值.
+   * @brief Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
+   * @param The value of register ATIME
    */
   void setAtime(uint8_t value);
   void setAstep(uint16_t value);
   /**
-   * @brief 设置增益值(0~10对应 X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
-   * @param CFG1寄存器的值.
+   * @brief Set gain value (0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
+   * @param The value of register CFG1
    */
   void setAGAIN(uint8_t value);
 
   /**
-   * @brief 设置WTIME值，通过该值可计算 wite time，该值表示读取数据过程中必须要消耗的时间
-   * @param WTIME的值.
+   * @brief Set Set the value of WTIME, through which wite time can be calculated. The value represents the time that
+   * @ must be spent during data reading.
+   * @param The value of WTIME
    */
   void setWtime(uint8_t value);
   
@@ -215,30 +216,30 @@ public:
   //void mapChannel(eChannel_t ADC0,eChannel_t ADC1,eChannel_t ADC2,eChannel_t ADC3,eChannel_t ADC4,eChannel_t ADC5);
   //void setGpio();
   /**
-   * @brief 开始光谱的测量.
-   * @param 通道映射的模式 :1.eF1F4ClearNIR,2.eF5F8ClearNIR
+   * @brief Start spectrum measurement 
+   * @param Channel mapping mode: 1.eF1F4ClearNIR,2.eF5F8ClearNIR
    */
   void startMeasure(eChChoose_t mode);
   /**
-   * @brief 读取传感器数据通道0~5的值，eF1F4ClearNIR模式下.
-   * @return sModeOneData_t 的数据
+   * @brief Read the value of sensor data channel 0~5, under eF1F4ClearNIR
+   * @return The data of sModeOneData_t
    */
   sModeOneData_t readSpectralDataOne();
   
   /**
-   * @brief 读取传感器数据通道0~5的值,eF5F8ClearNIR模式下.
-   * @return sModeTwoData_t 的数据
+   * @brief Read the value of sensor data channel 0~5, under eF5F8ClearNIR
+   * @return The data of sModeTwoData_t
    */
   sModeTwoData_t readSpectralDataTwo();
   
   /**
-   * @brief 读取flicker寄存器的值，可据此预计光源的闪烁频率
-   * @return flicker寄存器的数据.
+   * @brief Read the value of register flicker, through which the flicker frequency of the light source can be predicted
+   * @return The data of register flicker
    */
   uint8_t readFlickerData();
   /**
-   * @brief 设置测量模式
-   * @param mode 测量模式.
+   * @brief Set measurement mode 
+   * @param mode
    */
   void config(eMode_t mode);
   bool measureComplete();
