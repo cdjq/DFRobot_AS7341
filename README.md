@@ -108,8 +108,8 @@ M0        |      √       |              |             |
 
 ## History
 
-- data 2020-7-31
-- version V0.1
+- Date 2020-7-31
+- Version V0.1
 
 
 ## Credits
