@@ -1,6 +1,6 @@
 /*!
  * @file getFlicker.ino
- * @brief 读取光源的闪烁频率
+ * @brief Read the flicker frequency of light source 
  * 
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
@@ -21,9 +21,9 @@ DFRobot_AS7341 as7341;
 void setup(void)
 {
   Serial.begin(115200);
-  //检测IIC是否能正常通信
+  //Detect if IIC can communicate properly
   while (as7341.begin() != 0) {
-    Serial.println("IIC初始化失败，请检测连线是否正确");
+    Serial.println("IIC init failed, please check if the wire connection is correct");
     delay(1000);
   }
   
@@ -31,14 +31,14 @@ void setup(void)
 
 void loop(void){
   uint8_t freq = 0;
-  //设置寄存器ATIME的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
+  //Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
   as7341.setAtime(100);
-  //设置ASTEP寄存器的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
+  //Set the value of register ASTEP, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
   as7341.setAstep(999);
-  //设置增益(0~10对应 X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
+  //Set gain value(0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
   as7341.setAGAIN(9);
   
-  //读取flicker寄存器的值，可据此预计光源的闪烁频率
+  //Read the value of register flicker, through which the flicker frequency of the light source can be predicted
   freq = as7341.readFlickerData();
   //Serial.println(freq);
   if (freq == 44) {
