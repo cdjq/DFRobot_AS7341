@@ -36,7 +36,8 @@ To use this library, first download the library file, paste it into the \Arduino
   uint8_t readID();
   
   /** 
-   * @brief Set the value of register ATIME, through which the value of integration time can be calculated. The value represents the time that must be spent during data reading.
+   * @brief Set the value of register ATIME, through which the value of integration time can be calculated. The value represents
+   * @ the time that must be spent during data reading.
    * @param The value of register ATIME
    */
   void setAtime(uint8_t value);
@@ -48,7 +49,8 @@ To use this library, first download the library file, paste it into the \Arduino
   void setAGAIN(uint8_t value);
 
   /**
-   * @brief Set the value of WTIME, through which wite time can be calculated. The value represents the time that must be spent during data reading.
+   * @brief Set the value of WTIME, through which wite time can be calculated. The value represents the time that
+   * @ must be spent during data reading.
    * @param The value of WTIME
    */
   void setWtime(uint8_t value);
