@@ -1,10 +1,11 @@
 /*!
  * @file getData.ino
- * @brief 通过syns模式读取光谱数据,每次测量时都需要一个电平脉冲激活芯片的测量功能，
-    测量结束后芯片进入idle模式，可以节省电量
+ * @brief Read spectrum data by syns mode. The chip's measurement function needs to be activated by a level pulse for each measurement.
+    The chip will enter idle mode when the measurement is done, which could save power.
  * 
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @licence     The MIT License (MIT)
+ 
  * @author [fengli](li.feng@dfrobot.com)
  * @version  V1.0
  * @date  2020-07-16
@@ -23,22 +24,22 @@ DFRobot_AS7341 as7341;
 void setup(void)
 {
   Serial.begin(115200);
-  //检测IIC是否能正常通信
+  //Detect if IIC can communicate properly
   while (as7341.begin(as7341.eSyns) != 0) {
-    Serial.println("IIC初始化失败，请检测连线是否正确");
+    Serial.println("IIC init failed, please check if the wire connection is correct");
     delay(1000);
   }
-  //设置寄存器ATIME的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
+  //Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
   as7341.setAtime(100);
-  //设置ASTEP寄存器的值，通过该值可计算Integration time的值，该值表示读取数据过程中必须要消耗的时间
+  //Set the value of register ASTEP, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
   as7341.setAstep(999);
-  //设置增益(0~10对应 X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
+  //Set gain value(0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
   as7341.setAGAIN(9);
  // as7341.config(as7341.eSyns);
   pinMode(AS7341_GPIO, OUTPUT);
   digitalWrite(AS7341_GPIO, HIGH);
-  //开始光谱的测量.
-  //通道映射的模式 :1.eF1F4ClearNIR,2.eF5F8ClearNIR
+  //Start spectrum measurement 
+  //Channel mapping mode: 1.eF1F4ClearNIR,2.eF5F8ClearNIR
   as7341.startMeasure(as7341.eF1F4ClearNIR);
  // as7341.startMeasure(as7341.eF5F8ClearNIR);
 }
@@ -47,7 +48,7 @@ void loop(void)
   DFRobot_AS7341::sModeOneData_t data1;
   DFRobot_AS7341::sModeTwoData_t data2;
   
-  //通过gpio脉冲使传感器进入测量模式
+  //Put the sensor into measurement mode by gpio pulse 
   while(!as7341.measureComplete()){
      digitalWrite(AS7341_GPIO, LOW);
      delay(15);
@@ -56,35 +57,35 @@ void loop(void)
     
 
   
-  //读取传感器数据通道0~5的值，eF1F4ClearNIR模式下.
+  //Read the value of sensor data channel 0~5, under eF1F4ClearNIR
   data1 = as7341.readSpectralDataOne();
   
-  Serial.print("ADC0/F1-(紫色) ");
+  Serial.print("ADC0/F1-(purple) ");
   Serial.println(data1.ADF1);
-  Serial.print("ADC1/F2-(靛)");
+  Serial.print("ADC1/F2-(indigo)");
   Serial.println(data1.ADF2);
-  Serial.print("ADC2/F3-(蓝紫)");
+  Serial.print("ADC2/F3-(blueviolet)");
   Serial.println(data1.ADF3);
-  Serial.print("ADC3/F4-(蓝)");   
+  Serial.print("ADC3/F4-(blue)");   
   Serial.println(data1.ADF4);
-  //Serial.print("ADC4/Clear-(红外)");
+  //Serial.print("ADC4/Clear-(IR)");
   //Serial.println(data1.ADCLEAR);
   //Serial.print("ADC5/NIR-");
   //Serial.println(data1.ADNIR);
   //delay(1000);
   /*
   //as7341.startMeasure(as7341.eF5F8ClearNIR);
-  //读取传感器数据通道0~5的值,eF5F8ClearNIR模式下.
+  //Read the value of sensor data channel 0~5, under eF5F8ClearNIR
   data2 = as7341.readSpectralDataTwo();
-  Serial.print("ADC0/F5-(绿色) ");
+  Serial.print("ADC0/F5-(green) ");
   Serial.println(data2.ADF5);
-  Serial.print("ADC1/F6-(黄)");
+  Serial.print("ADC1/F6-(yellow)");
   Serial.println(data2.ADF6);
-  Serial.print("ADC2/F7-(橙)");
+  Serial.print("ADC2/F7-(orange)");
   Serial.println(data2.ADF7);
-  Serial.print("ADC3/F8-(红)");   
+  Serial.print("ADC3/F8-(red)");   
   Serial.println(data2.ADF8);
-  Serial.print("ADC4/Clear-(红外)");
+  Serial.print("ADC4/Clear-(IR)");
   Serial.println(data2.ADCLEAR);
   Serial.print("ADC5/NIR-");
   Serial.println(data2.ADNIR);
