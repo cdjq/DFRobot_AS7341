@@ -1,6 +1,5 @@
 //50HZ
 //Burn the codes to another main-controller, and connect an LED onto the Digital pin 10 to provide 50Hz ambient light for getFlicker.ino. 
- 
 
 void setup() {
   pinMode(10, OUTPUT);

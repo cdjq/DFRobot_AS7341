@@ -26,34 +26,21 @@ void setup(void)
     Serial.println("IIC init failed, please check if the wire connection is correct");
     delay(1000);
   }
-  
 }
 
 void loop(void){
   uint8_t freq = 0;
-  //Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
-  as7341.setAtime(100);
-  //Set the value of register ASTEP, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
-  as7341.setAstep(999);
-  //Set gain value(0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
-  as7341.setAGAIN(9);
-  
   //Read the value of register flicker, through which the flicker frequency of the light source can be predicted
   freq = as7341.readFlickerData();
   //Serial.println(freq);
   if (freq == 44) {
     Serial.println("Unknown frequency");
-
   } else if (freq == 45) {
-    Serial.println("100 Hz ");
+    Serial.println("50 Hz ");
 
   } else if (freq == 46) {
-    Serial.println("120 Hz ");
+    Serial.println("60 Hz ");
   } else {
     Serial.println("An unknown error");
   }
- 
-
-
-
 }

@@ -212,9 +212,6 @@ public:
    */
   void setWtime(uint8_t value);
   
-
-  //void mapChannel(eChannel_t ADC0,eChannel_t ADC1,eChannel_t ADC2,eChannel_t ADC3,eChannel_t ADC4,eChannel_t ADC5);
-  //void setGpio();
   /**
    * @brief Start spectrum measurement 
    * @param Channel mapping mode: 1.eF1F4ClearNIR,2.eF5F8ClearNIR

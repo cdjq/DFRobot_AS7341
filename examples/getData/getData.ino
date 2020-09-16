@@ -26,25 +26,22 @@ void setup(void)
     Serial.println("IIC init failed, please check if the wire connection is correct");
     delay(1000);
   }
-  //Integration time = (ATIME + 1) x (ASTEP + 1) x 2.78µs
-  //Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
-  as7341.setAtime(29);
-  //Set the value of register ASTEP, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
-   * @ the time that must be spent during data reading.
-  as7341.setAstep(599);
-  //Set gain value(0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
-  as7341.setAGAIN(7);
-  //Enable LED
-  //as7341.enableLed(true);
-  //Set pin current to control brightness (1~20 corresponds to current 4mA,6mA,8mA,10mA,12mA,......,42mA)
-  //as7341.controlLed(0);
-
+//  //Integration time = (ATIME + 1) x (ASTEP + 1) x 2.78µs
+//  //Set the value of register ATIME, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
+//  as7341.setAtime(29);
+//  //Set the value of register ASTEP, through which the value of Integration time can be calculated. The value represents the time that must be spent during data reading.
+//  as7341.setAstep(599);
+//  //Set gain value(0~10 corresponds to X0.5,X1,X2,X4,X8,X16,X32,X64,X128,X256,X512)
+//  as7341.setAGAIN(7);
+//  //Enable LED
+//  //as7341.enableLed(true);
+//  //Set pin current to control brightness (1~20 corresponds to current 4mA,6mA,8mA,10mA,12mA,......,42mA)
+//  //as7341.controlLed(1);
 }
 void loop(void)
 {
   DFRobot_AS7341::sModeOneData_t data1;
   DFRobot_AS7341::sModeTwoData_t data2;
-
 
   //Start spectrum measurement 
   //Channel mapping mode: 1.eF1F4ClearNIR,2.eF5F8ClearNIR
@@ -60,11 +57,10 @@ void loop(void)
   Serial.println(data1.ADF3);
   Serial.print("F4(505-525nm):");   
   Serial.println(data1.ADF4);
-  //Serial.print("ADC4/Clear-(IR)");
+  //Serial.print("Clear:");
   //Serial.println(data1.ADCLEAR);
-  //Serial.print("ADC5/NIR-");
+  //Serial.print("NIR:");
   //Serial.println(data1.ADNIR);
-  //delay(1000);
   as7341.startMeasure(as7341.eF5F8ClearNIR);
   //Read the value of sensor data channel 0~5, under eF5F8ClearNIR
   data2 = as7341.readSpectralDataTwo();
