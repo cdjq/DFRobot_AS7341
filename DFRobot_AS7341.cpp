@@ -358,8 +358,10 @@ void DFRobot_AS7341::setBank(uint8_t addr){
 }
 void DFRobot_AS7341::controlLed(uint8_t current){
   uint8_t data=0;
+  if(current < 1) current = 1;
     current--;
   if(current > 19) current = 19;
+  
 
 setBank(1);
   
