@@ -325,16 +325,21 @@ void DFRobot_AS7341::setGpioMode(uint8_t mode)
 
 void DFRobot_AS7341::enableLed(bool on){
   uint8_t data=0;
-  readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (1<<4);
-  writeReg(REG_AS7341_CFG_0,&data,1);
+  uint8_t data1=0;
+setBank(1);
+  
   readReg(REG_AS7341_CONFIG,&data,1);
+  readReg(REG_AS7341_LED,&data1,1);
   if(on == true){
     data = data | (1<<3);
+    data1 = data1 | (1<<7);
   } else {
     data = data & (~(1<<3));
+    data1 = data1 & (~(1<<7));
   }
   writeReg(REG_AS7341_CONFIG,&data,1);
+  writeReg(REG_AS7341_LED,&data1,1);
+  setBank(0);
 }
 
 void DFRobot_AS7341::setBank(uint8_t addr){
@@ -353,17 +358,21 @@ void DFRobot_AS7341::setBank(uint8_t addr){
 }
 void DFRobot_AS7341::controlLed(uint8_t current){
   uint8_t data=0;
-  current--;
+    current--;
   if(current > 19) current = 19;
-  readReg(REG_AS7341_CFG_0,&data,1);
-  data = data | (1<<4);
-  writeReg(REG_AS7341_CFG_0,&data,1);
+
+setBank(1);
+  
   data = 0;
-  readReg(REG_AS7341_LED,&data,1);
+ // readReg(REG_AS7341_LED,&data,1);
   data = data | (1<<7);
   data = data | (current & 0x7f);
   writeReg(REG_AS7341_LED,&data,1);
   delay(100);
+  //readReg(REG_AS7341_CFG_0,&data,1);
+  //data = data & (~(1<<4));
+  //writeReg(REG_AS7341_CFG_0,&data,1);
+  setBank(0);
 }
 
 void DFRobot_AS7341::setInt(bool connect){
