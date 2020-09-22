@@ -247,6 +247,19 @@ uint8_t DFRobot_AS7341::readFlickerData(){
   delay(600);
   readReg(REG_AS7341_STATUS,&flicker,1);
   enableFlickerDetection(false);
+  switch(flicker){
+    case 44:
+      flicker = 1;
+      break;
+    case 45:
+      flicker = 50;
+      break;
+    case 46:
+      flicker = 60;
+      break;
+    default:
+      flicker = 0;
+  }
   return flicker;
 }
 
